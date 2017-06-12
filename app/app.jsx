@@ -1,11 +1,15 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import { routes } from './routes/routes';
+// import Signup from 'Signup';
+
+
 
 // App.css
 require('applicationStyles');
 
 ReactDOM.render(
-  <p>Boilerplate 3 project</p>,
+  routes,
   document.getElementById('app')
 );
