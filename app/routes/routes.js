@@ -5,7 +5,7 @@ import Login from 'Login';
 import Signup from 'Signup';
 import { Dashboard } from 'Dashboard';
 import NotFound from 'NotFound';
-import { PrivateRoute, PublicRoute } from 'PrivateRoute';
+import { PrivateRoute, PublicRoute } from 'Routes';
 
 export const routes = (
   <Router>
