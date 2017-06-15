@@ -3,6 +3,9 @@ const _ = require('lodash');
 
 const router = new express.Router();
 
+// Load middleware
+const { authenticate } = require('./../middleware/authenticate');
+
 // Load models
 const { User } = require('./../models/user');
 
@@ -17,6 +20,10 @@ router.post('/users', (req, res) => {
   }).catch((err) => {
     res.satus(400).send(err);
   })
+});
+
+router.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
 });
 
 module.exports = {
