@@ -50,6 +50,17 @@ UserSchema.methods.generateAuthToken = function() {
   });
 };
 
+UserSchema.methods.removeToken = function(token) {
+  var user = this;
+  return user.update({
+    $pull: {
+      tokens: {
+        token
+      }
+    }
+  });
+};
+
 /// override toJSON
 UserSchema.methods.toJSON = function() {
   var user = this;
