@@ -36,7 +36,6 @@ export default class Signup extends React.Component {
         password
       }
     }).then((res) => {
-      console.log(res.headers.authorization);
       if (res.status === 200) {
         var authToken = res.headers.authorization.split(' ')[1];
         authenticateUser(authToken);
@@ -47,7 +46,7 @@ export default class Signup extends React.Component {
         error: err
       });
     });
-    
+
   }
   render() {
     return (

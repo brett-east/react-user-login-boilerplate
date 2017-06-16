@@ -1,12 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getTokenHeader, deauthenticateUser } from 'auth';
+import axios from 'axios';
+
+const handleLogout = (props) => {
+  axios.delete('/auth/users/me/logout', {
+    headers: {
+      authorization: getTokenHeader()
+    }
+  }).then((res) => {
+    if (res.status === 200) {
+      deauthenticateUser();
+      props.history.replace('/');
+    }
+  }).catch((err) => {
+    console.log('couldn\'t logout error', err);
+  });
+};
 
 const PrivateHeader = (props) => {
   return (
     <div className="header">
       <div className="header__content">
         <h1 className="header__title">{props.title}</h1>
-        <button className="button button--link-text" onClick={() => {}}>Logout</button>
+        <button className="button button--link-text" onClick={() => {handleLogout(props)}}>Logout</button>
       </div>
     </div>
   );

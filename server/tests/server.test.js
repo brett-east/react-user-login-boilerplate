@@ -203,11 +203,11 @@ describe('POST /auth/users/login', () => {
 });
 
 
-describe('DELETE /auth/users/me/token', () => {
+describe('DELETE /auth/users/me/logout', () => {
 
   it('should remove auth token on logout', (done) => {
     request(app)
-      .delete('/auth/users/me/token')
+      .delete('/auth/users/me/logout')
       .set('Authorization', `Bearer ${users[0].tokens[0].token}`)
       .expect(200)
       .end((err, res) => {

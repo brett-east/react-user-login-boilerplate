@@ -38,7 +38,7 @@ router.get('/users/me', authenticate, (req, res) => {
   res.send(req.user);
 });
 
-router.delete('/users/me/token', authenticate, (req, res) => {
+router.delete('/users/me/logout', authenticate, (req, res) => {
   req.user.removeToken(req.token).then(() => {
     res.status(200).send();
   }).catch((err) => {
