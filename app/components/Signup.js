@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import validator from 'validator';
 
 import { authenticateUser } from 'auth';
 
@@ -18,7 +19,13 @@ export default class Signup extends React.Component {
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
 
-    if (password.length < 9) {
+    if (!validator.isEmail(email)) {
+      return this.setState({
+        error: 'You must use a valid email'
+      });
+    }
+
+    if (password.length < 8) {
       return this.setState({
         error: 'Password must be more than 8 characters in length'
       });
@@ -50,19 +57,26 @@ export default class Signup extends React.Component {
   }
   render() {
     return (
-      <div className="boxed-view">
-        <div className="boxed-view__box">
-          <h1>Sign up to our app</h1>
+      <div className="panel-view">
+        <div className="panel-view__panel">
+          <div className="panel-view__column">
+            <h1>Some app name</h1>
 
-          {this.state.error ? <p>{this.state.error}</p> : undefined}
+            <p>This is an app, it's really cool, you should sign up!</p>
+            <Link to="/login">Already have an account?</Link>
+          </div>
+          <div className="panel-view__column">
+            <h2>Sign up</h2>
 
-          <form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
-            <input type="email" ref="email" name="email" placeholder="Email" />
-            <input type="password" ref="password" name="password" placeholder="Password" />
-            <button className="button">Create Account</button>
-          </form>
+            {this.state.error ? <p>{this.state.error}</p> : undefined}
 
-          <Link to="/login">Already have an account?</Link>
+            <form onSubmit={this.onSubmit.bind(this)} noValidate className="panel-view__form">
+              <input type="email" ref="email" name="email" placeholder="Email" />
+              <input type="password" ref="password" name="password" placeholder="Password" />
+              <button className="button">Create Account</button>
+            </form>
+
+          </div>
         </div>
       </div>
     );

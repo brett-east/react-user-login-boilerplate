@@ -1,2 +1,34 @@
 // Colors
-$grey: #333;
+$brand-primary: #3FA8A8;
+$brand-secondary: #3FA8A8;
+$grey: #dddddd;
+$light-grey: #f9f9f9;
+$dark-grey: #777777;
+
+// Spacing
+$space: 1.4rem;
+$site-max-width: 80rem;
+
+// Font sizes
+$base-font-size: 1.6rem;
+$large-font-size: 2rem;
+
+// Form inputs
+$input-border: $grey;
+$input-spacing: 1rem;
+
+// Boxed view
+$boxed-view-overlay-bg: $grey;
+$boxed-view-bg: #ffffff;
+
+// Button
+$button-bg: $brand-primary;
+$button-color: #ffffff;
+$button-pill-color: $brand-primary;
+$button-secondary-bg: $light-grey;
+$button-secondary-color: $dark-grey;
+$button-secondary-border-color: $grey;
+
+// Header
+$header-bg: $brand-primary;
+$header-color: #ffffff;
