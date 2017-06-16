@@ -73,7 +73,7 @@ describe('GET /auth/users/me', () => {
   it('should return user if authenticated', (done) => {
     request(app)
       .get('/auth/users/me')
-      .set('x-auth', users[0].tokens[0].token)
+      .set('Authorization', `Bearer ${users[0].tokens[0].token}`)
       .expect(200)
       .expect((res) => {
         expect(res.body._id).toBe(users[0]._id.toHexString());
@@ -107,7 +107,7 @@ describe('POST /auth/users', () => {
       .send({ email, password })
       .expect(200)
       .expect((res) => {
-        expect(res.headers['x-auth']).toExist();
+        expect(res.headers.authorization).toExist();
         expect(res.body._id).toExist();
         expect(res.body.email).toBe(email);
       })
@@ -159,7 +159,7 @@ describe('POST /auth/users/login', () => {
       })
       .expect(200)
       .expect((res) => {
-        expect(res.headers['x-auth']).toExist();
+        expect(res.headers.authorization).toExist();
       })
       .end((err, res) => {
         if (err) {
@@ -169,7 +169,7 @@ describe('POST /auth/users/login', () => {
         User.findById(users[1]._id).then((user) => {
           expect(user.tokens[0]).toInclude({
             access: 'auth',
-            token: res.headers['x-auth']
+            token: res.headers.authorization.split(' ')[1]
           });
           done();
         }).catch((err) => done(err));
@@ -186,7 +186,7 @@ describe('POST /auth/users/login', () => {
       })
       .expect(400)
       .expect((res) => {
-        expect(res.headers['x-auth']).toNotExist();
+        expect(res.headers.authorization).toNotExist();
       })
       .end((err, res) => {
         if (err) {
@@ -208,7 +208,7 @@ describe('DELETE /auth/users/me/token', () => {
   it('should remove auth token on logout', (done) => {
     request(app)
       .delete('/auth/users/me/token')
-      .set('x-auth', users[0].tokens[0].token)
+      .set('Authorization', `Bearer ${users[0].tokens[0].token}`)
       .expect(200)
       .end((err, res) => {
         if (err) {
