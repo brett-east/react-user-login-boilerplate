@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+import { authenticateUser } from 'auth';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -13,6 +16,28 @@ export default class Login extends React.Component {
 
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
+
+    axios({
+      method: 'post',
+      url: '/auth/users/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        email,
+        password
+      }
+    }).then((res) => {
+      if (res.status === 200) {
+        var authToken = res.headers.authorization.split(' ')[1];
+        authenticateUser(authToken);
+        this.props.history.replace('/dashboard');
+      }
+    }).catch((err) => {
+      this.setState({
+        error: err
+      });
+    });
 
   }
   render() {

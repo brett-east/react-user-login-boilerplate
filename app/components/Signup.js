@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const axios = require('axios');
+import axios from 'axios';
 
 import { authenticateUser } from 'auth';
 
