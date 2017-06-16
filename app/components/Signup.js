@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+const axios = require('axios');
+
+import { authenticateUser } from 'auth';
 
 export default class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: ''
+      error: '',
+      authToken: ''
     };
   }
   onSubmit(e) {
@@ -19,6 +23,31 @@ export default class Signup extends React.Component {
         error: 'Password must be more than 8 characters in length'
       });
     }
+
+    // save user
+    axios({
+      method: 'post',
+      url: '/auth/users',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        email,
+        password
+      }
+    }).then((res) => {
+      console.log(res.headers.authorization);
+      if (res.status === 200) {
+        var authToken = res.headers.authorization.split(' ')[1];
+        authenticateUser(authToken);
+        this.props.history.replace('/dashboard');
+      }
+    }).catch((err) => {
+      this.setState({
+        error: err
+      });
+    });
+    
   }
   render() {
     return (
