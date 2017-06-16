@@ -10,11 +10,10 @@ const handleLogout = (props) => {
     }
   }).then((res) => {
     if (res.status === 200) {
-      deauthenticateUser();
-      props.history.replace('/');
+      deauthenticateUser(props);
     }
   }).catch((err) => {
-    console.log('couldn\'t logout error', err);
+
   });
 };
 

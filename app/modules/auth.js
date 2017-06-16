@@ -5,8 +5,11 @@ export function authenticateUser(authToken) {
   localStorage.setItem('authToken', authToken);
 };
 
-export function deauthenticateUser() {
+export function deauthenticateUser(props) {
   localStorage.removeItem('authToken');
+  if (props.history) {
+    props.history.replace('/');
+  }
 };
 
 export function checkAuthenticated() {
