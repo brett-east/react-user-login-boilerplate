@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import validator from 'validator';
 
 import { authenticateUser } from 'auth';
 
@@ -16,6 +17,12 @@ export default class Login extends React.Component {
 
     let email = this.refs.email.value.trim();
     let password = this.refs.password.value.trim();
+
+    if (!validator.isEmail(email)) {
+      return this.setState({
+        error: 'You must use a valid email'
+      });
+    }
 
     axios({
       method: 'post',
@@ -34,8 +41,9 @@ export default class Login extends React.Component {
         this.props.history.replace('/dashboard');
       }
     }).catch((err) => {
+      console.log(err.response);
       this.setState({
-        error: err
+        error: err.message
       });
     });
 

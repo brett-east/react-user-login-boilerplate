@@ -9,8 +9,7 @@ export default class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: '',
-      authToken: ''
+      error: ''
     };
   }
   onSubmit(e) {
@@ -49,9 +48,11 @@ export default class Signup extends React.Component {
         this.props.history.replace('/dashboard');
       }
     }).catch((err) => {
-      this.setState({
-        error: err
-      });
+      if (err.response) {
+        this.setState({
+          error: err.response.data.message
+        });
+      }
     });
 
   }

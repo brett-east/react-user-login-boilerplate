@@ -18,7 +18,11 @@ router.post('/users', (req, res) => {
   }).then((token) => {
     res.header('Authorization', `Bearer ${token}`).send(user);
   }).catch((err) => {
-    res.status(400).send();
+    if (err.name === 'MongoError' && err.code === 11000) {
+        // Duplicate email
+        return res.status(400).send({message: 'Email is already in use'});
+      }
+    res.status(400).send(err);
   });
 });
 
@@ -30,7 +34,7 @@ router.post('/users/login', (req, res) => {
       res.header('Authorization', `Bearer ${token}`).send(user);
     });
   }).catch((err) => {
-    res.status(400).send();
+    res.status(400).send(err);
   });
 });
 
