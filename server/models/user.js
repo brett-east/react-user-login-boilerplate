@@ -90,10 +90,11 @@ UserSchema.statics.findByToken = function(token) {
 
 UserSchema.statics.findByCredentials = function(email, password) {
   var User = this;
+  var errorMessage = { message: 'Your email or password was incorrect'};
 
   return User.findOne({ email }).then((user) => {
     if (!user) {
-      return Promise.reject();
+      return Promise.reject(errorMessage);
     }
 
     return new Promise((resolve, reject) => {
@@ -101,7 +102,7 @@ UserSchema.statics.findByCredentials = function(email, password) {
         if (res) {
           resolve(user);
         } else {
-          reject();
+          reject(errorMessage);
         }
       });
     });
